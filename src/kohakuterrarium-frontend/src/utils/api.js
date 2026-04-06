@@ -190,6 +190,24 @@ export const agentAPI = {
   },
 };
 
+/** File operations */
+export const filesAPI = {
+  async getTree(root, depth = 3) {
+    const { data } = await api.get("/files/tree", { params: { root, depth } });
+    return data;
+  },
+
+  async readFile(path) {
+    const { data } = await api.get("/files/read", { params: { path } });
+    return data;
+  },
+
+  async writeFile(path, content) {
+    const { data } = await api.post("/files/write", { path, content });
+    return data;
+  },
+};
+
 /** Saved sessions */
 export const sessionAPI = {
   /** @returns {Promise<object[]>} */
@@ -206,6 +224,26 @@ export const sessionAPI = {
 
   async delete(sessionName) {
     const { data } = await api.delete(`/sessions/${sessionName}`);
+    return data;
+  },
+};
+
+/** Registry browser */
+export const registryAPI = {
+  async listLocal() {
+    const { data } = await api.get("/registry/");
+    return data;
+  },
+  async listRemote() {
+    const { data } = await api.get("/registry/remote");
+    return data;
+  },
+  async install(url, name) {
+    const { data } = await api.post("/registry/install", { url, name });
+    return data;
+  },
+  async uninstall(name) {
+    const { data } = await api.post("/registry/uninstall", { name });
     return data;
   },
 };

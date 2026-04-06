@@ -108,6 +108,17 @@
       />
     </router-link>
 
+    <!-- Registry browser -->
+    <router-link to="/registry" custom v-slot="{ navigate, isExactActive }">
+      <NavItem
+        :expanded="expanded"
+        :active="isExactActive"
+        icon="i-carbon-catalog"
+        label="Registry"
+        @click="navigate"
+      />
+    </router-link>
+
     <div class="mx-2 border-t border-warm-200 dark:border-warm-700 mt-1 mb-1" />
 
     <!-- Theme toggle -->

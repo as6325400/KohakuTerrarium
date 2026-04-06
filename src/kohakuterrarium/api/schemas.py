@@ -75,3 +75,29 @@ class SlashCommand(BaseModel):
 
     command: str  # Command name without slash (e.g. "model", "status")
     args: str = ""  # Arguments string
+
+
+class FileWrite(BaseModel):
+    """Request body for writing a file."""
+
+    path: str
+    content: str
+
+
+class FileRename(BaseModel):
+    """Request body for renaming/moving a file."""
+
+    old_path: str
+    new_path: str
+
+
+class FileDelete(BaseModel):
+    """Request body for deleting a file."""
+
+    path: str
+
+
+class FileMkdir(BaseModel):
+    """Request body for creating a directory."""
+
+    path: str
