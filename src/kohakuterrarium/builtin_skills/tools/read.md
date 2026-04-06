@@ -75,7 +75,7 @@ Lines longer than 2000 characters are truncated with a notice.
 - UTF-8 encoding for text files (invalid bytes replaced)
 - Very large text files should use offset/limit
 - Images must be under 20MB
-- PDFs require pymupdf (`pip install pymupdf`) for rendering
+- PDF reading may not be available in all configurations. If you get an error, tell the user.
 
 ## TIPS
 

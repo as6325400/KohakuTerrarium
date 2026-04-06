@@ -8,7 +8,6 @@ tags: [web, search, network]
 # web_search
 
 Search the web and return structured results with titles, URLs, and snippets.
-Uses DuckDuckGo (no API key required).
 
 ## Arguments
 
@@ -20,10 +19,9 @@ Uses DuckDuckGo (no API key required).
 
 ## Behavior
 
-- Uses the DuckDuckGo search API via the `ddgs` or `duckduckgo-search` package.
 - No API key needed.
 - Results include title, URL, and snippet for each match.
-- If neither search package is installed, returns an error with install instructions.
+- If the search backend is not available, returns an error. Tell the user.
 
 ## WHEN TO USE
 
@@ -47,9 +45,9 @@ Official documentation for the asyncio module...
 
 ## LIMITATIONS
 
-- Requires `ddgs` or `duckduckgo-search` package (`pip install ddgs`)
-- DuckDuckGo may rate-limit heavy usage
-- Results depend on DuckDuckGo's index and ranking
+- Search may not be available in all configurations. If you get an error, tell the user.
+- May be rate-limited under heavy usage.
+- Results depend on the search engine's index and ranking.
 
 ## TIPS
 

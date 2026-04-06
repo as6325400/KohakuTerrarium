@@ -25,7 +25,7 @@ class TestWebFetchTool:
         tool = WebFetchTool()
         doc = tool.get_full_documentation()
         assert "url" in doc.lower()
-        assert "httpx" in doc.lower()
+        assert "backend" in doc.lower()
 
     @pytest.mark.asyncio
     async def test_no_url(self):
@@ -86,7 +86,7 @@ class TestWebSearchTool:
         tool = WebSearchTool()
         doc = tool.get_full_documentation()
         assert "query" in doc.lower()
-        assert "duckduckgo" in doc.lower()
+        assert "search" in doc.lower()
 
     @pytest.mark.asyncio
     async def test_no_query(self):

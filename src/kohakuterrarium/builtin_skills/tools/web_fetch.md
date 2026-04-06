@@ -15,21 +15,10 @@ Fetch a web page and return its content in clean, readable markdown format.
 |-----|------|-------------|
 | url | string | URL to fetch (required) |
 
-## Available Backends (in priority order)
-
-The tool automatically tries backends in order, using the best available:
-
-1. **crawl4ai** (optional: `pip install crawl4ai`) -- JS rendering, anti-bot
-   handling, best quality. Uses headless browser.
-2. **trafilatura** (optional: `pip install trafilatura`) -- Good content
-   extraction from HTML, no JS rendering.
-3. **Jina Reader** (built-in) -- Uses the r.jina.ai API for server-side JS
-   rendering. Zero local deps but may be rate-limited.
-4. **httpx + html2text** (built-in) -- Always works, lowest quality. Basic
-   HTML-to-markdown conversion.
-
 ## Behavior
 
+- Multiple extraction backends are tried automatically in order of quality.
+- Falls back gracefully if the best backend is unavailable.
 - URLs without a scheme are auto-prefixed with `https://`.
 - Output is truncated to 100,000 characters if the page is very large.
 - Timeout is 30 seconds per backend attempt.
@@ -50,11 +39,11 @@ Returns the page content as clean markdown text.
 
 - Content cap: 100,000 characters (truncated with notice if exceeded)
 - 30-second timeout per backend
-- JS-heavy pages may not render well without crawl4ai installed
+- JS-heavy or single-page-app sites may not render correctly
 - Some sites may block automated access
 
 ## TIPS
 
-- Install `crawl4ai` for best results with JS-heavy sites.
-- Install `trafilatura` for good extraction without a browser dependency.
 - Use `web_search` first to find URLs, then `web_fetch` to read them.
+- If a page returns empty or garbled content, the site may require JS rendering
+  that is not available. Try a different URL or source.
