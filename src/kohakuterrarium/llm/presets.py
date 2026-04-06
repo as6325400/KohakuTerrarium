@@ -515,22 +515,30 @@ PRESETS: dict[str, dict[str, Any]] = {
     },
     # ═══════════════════════════════════════════════════════
     #  Mistral series (via OpenRouter)
+    #  Large = flagship, Small 4 = reasoning, Codestral/Devstral = coding
     # ═══════════════════════════════════════════════════════
-    "mistral-large": {
+    "mistral-large-3": {
         "provider": "openai",
         "model": "mistralai/mistral-large-2512",
         "base_url": "https://openrouter.ai/api/v1",
         "api_key_env": "OPENROUTER_API_KEY",
         "max_context": 262144,
     },
-    "mistral-medium": {
+    "mistral-medium-3.1": {
         "provider": "openai",
         "model": "mistralai/mistral-medium-3.1",
         "base_url": "https://openrouter.ai/api/v1",
         "api_key_env": "OPENROUTER_API_KEY",
         "max_context": 131072,
     },
-    "mistral-small": {
+    "mistral-medium-3": {
+        "provider": "openai",
+        "model": "mistralai/mistral-medium-3",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_key_env": "OPENROUTER_API_KEY",
+        "max_context": 131072,
+    },
+    "mistral-small-4": {
         "provider": "openai",
         "model": "mistralai/mistral-small-2603",
         "base_url": "https://openrouter.ai/api/v1",
@@ -538,6 +546,31 @@ PRESETS: dict[str, dict[str, Any]] = {
         "max_context": 262144,
         "extra_body": {"reasoning": {"effort": "high"}},
     },
+    "mistral-small-3.2": {
+        "provider": "openai",
+        "model": "mistralai/mistral-small-3.2-24b-instruct",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_key_env": "OPENROUTER_API_KEY",
+        "max_context": 128000,
+    },
+    # Magistral: dedicated reasoning models
+    "magistral-medium": {
+        "provider": "openai",
+        "model": "mistralai/magistral-medium-2506",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_key_env": "OPENROUTER_API_KEY",
+        "max_context": 40960,
+        # Reasoning is always-on (mandatory)
+    },
+    "magistral-small": {
+        "provider": "openai",
+        "model": "mistralai/magistral-small-2506",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_key_env": "OPENROUTER_API_KEY",
+        "max_context": 40000,
+        # Reasoning is always-on (mandatory)
+    },
+    # Coding specialists
     "codestral": {
         "provider": "openai",
         "model": "mistralai/codestral-2508",
@@ -545,19 +578,49 @@ PRESETS: dict[str, dict[str, Any]] = {
         "api_key_env": "OPENROUTER_API_KEY",
         "max_context": 256000,
     },
-    "devstral": {
+    "devstral-2": {
         "provider": "openai",
         "model": "mistralai/devstral-2512",
         "base_url": "https://openrouter.ai/api/v1",
         "api_key_env": "OPENROUTER_API_KEY",
         "max_context": 262144,
     },
+    "devstral-medium": {
+        "provider": "openai",
+        "model": "mistralai/devstral-medium",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_key_env": "OPENROUTER_API_KEY",
+        "max_context": 131072,
+    },
+    "devstral-small": {
+        "provider": "openai",
+        "model": "mistralai/devstral-small",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_key_env": "OPENROUTER_API_KEY",
+        "max_context": 131072,
+    },
+    # Multimodal
     "pixtral-large": {
         "provider": "openai",
         "model": "mistralai/pixtral-large-2411",
         "base_url": "https://openrouter.ai/api/v1",
         "api_key_env": "OPENROUTER_API_KEY",
         "max_context": 131072,
+    },
+    # Small/edge models
+    "ministral-3-14b": {
+        "provider": "openai",
+        "model": "mistralai/ministral-14b-2512",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_key_env": "OPENROUTER_API_KEY",
+        "max_context": 262144,
+    },
+    "ministral-3-8b": {
+        "provider": "openai",
+        "model": "mistralai/ministral-8b-2512",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_key_env": "OPENROUTER_API_KEY",
+        "max_context": 262144,
     },
 }
 
@@ -600,5 +663,11 @@ ALIASES: dict[str, str] = {
     "grok-fast": "grok-4-fast",
     "grok-code": "grok-code-fast",
     # Mistral
-    "mistral": "mistral-large",
+    "mistral": "mistral-large-3",
+    "mistral-large": "mistral-large-3",
+    "mistral-medium": "mistral-medium-3.1",
+    "mistral-small": "mistral-small-4",
+    "magistral": "magistral-medium",
+    "devstral": "devstral-2",
+    "ministral": "ministral-3-14b",
 }
