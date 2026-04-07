@@ -19,26 +19,31 @@ PRESETS: dict[str, dict[str, Any]] = {
         "provider": "codex-oauth",
         "model": "gpt-5.4",
         "max_context": 272000,
+        "reasoning_effort": "high",
     },
     "gpt-5.3-codex": {
         "provider": "codex-oauth",
         "model": "gpt-5.3-codex",
         "max_context": 272000,
+        "reasoning_effort": "high",
     },
     "gpt-5.1": {
         "provider": "codex-oauth",
         "model": "gpt-5.1",
         "max_context": 272000,
+        "reasoning_effort": "high",
     },
     "gpt-4o": {
         "provider": "codex-oauth",
         "model": "gpt-4o",
         "max_context": 128000,
+        "reasoning_effort": "high",
     },
     "gpt-4o-mini": {
         "provider": "codex-oauth",
         "model": "gpt-4o-mini",
         "max_context": 128000,
+        "reasoning_effort": "high",
     },
     # ═══════════════════════════════════════════════════════
     #  OpenAI Direct API (api key auth)
@@ -50,6 +55,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "base_url": "https://api.openai.com/v1",
         "api_key_env": "OPENAI_API_KEY",
         "max_context": 272000,
+        "extra_body": {"reasoning": {"enabled": True, "effort": "high"}},
     },
     "gpt-5.4-mini-direct": {
         "provider": "openai",
@@ -57,6 +63,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "base_url": "https://api.openai.com/v1",
         "api_key_env": "OPENAI_API_KEY",
         "max_context": 272000,
+        "extra_body": {"reasoning": {"enabled": True, "effort": "high"}},
     },
     "gpt-5.4-nano-direct": {
         "provider": "openai",
@@ -64,6 +71,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "base_url": "https://api.openai.com/v1",
         "api_key_env": "OPENAI_API_KEY",
         "max_context": 272000,
+        "extra_body": {"reasoning": {"enabled": True, "effort": "high"}},
     },
     "gpt-5.3-codex-direct": {
         "provider": "openai",
@@ -71,6 +79,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "base_url": "https://api.openai.com/v1",
         "api_key_env": "OPENAI_API_KEY",
         "max_context": 272000,
+        "extra_body": {"reasoning": {"enabled": True, "effort": "high"}},
     },
     "gpt-5.1-direct": {
         "provider": "openai",
@@ -78,6 +87,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "base_url": "https://api.openai.com/v1",
         "api_key_env": "OPENAI_API_KEY",
         "max_context": 272000,
+        "extra_body": {"reasoning": {"enabled": True, "effort": "high"}},
     },
     "gpt-4o-direct": {
         "provider": "openai",
@@ -289,6 +299,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
         "api_key_env": "GEMINI_API_KEY",
         "max_context": 1048576,
+        "extra_body": {"reasoning": {"enabled": True, "effort": "high"}},
     },
     "gemini-3-flash-direct": {
         "provider": "openai",
@@ -296,6 +307,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
         "api_key_env": "GEMINI_API_KEY",
         "max_context": 1048576,
+        "extra_body": {"reasoning": {"enabled": True, "effort": "high"}},
     },
     "gemini-3.1-flash-lite-direct": {
         "provider": "openai",
@@ -303,6 +315,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
         "api_key_env": "GEMINI_API_KEY",
         "max_context": 1048576,
+        "extra_body": {"reasoning": {"enabled": True, "effort": "high"}},
     },
     # ═══════════════════════════════════════════════════════
     #  Gemma 4 (open models, via OpenRouter)
