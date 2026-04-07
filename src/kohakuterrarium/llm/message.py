@@ -75,8 +75,12 @@ ContentPart = TextPart | ImagePart
 
 
 def content_parts_to_dicts(parts: list[ContentPart]) -> list[dict[str, Any]]:
-    """Convert content parts to OpenAI API format."""
-    return [part.to_dict() for part in parts]
+    """Convert content parts to OpenAI API format.
+
+    Handles both ContentPart objects and raw dicts (from resumed sessions
+    where multimodal content was stored as serialized dicts).
+    """
+    return [part if isinstance(part, dict) else part.to_dict() for part in parts]
 
 
 # =============================================================================
@@ -259,8 +263,11 @@ MessageContent = str | list[ContentPart]
 
 
 def messages_to_dicts(messages: MessageList) -> list[dict[str, Any]]:
-    """Convert a list of Messages to OpenAI API format."""
-    return [msg.to_dict() for msg in messages]
+    """Convert a list of Messages to OpenAI API format.
+
+    Handles both Message objects and raw dicts (e.g. from resumed sessions).
+    """
+    return [msg if isinstance(msg, dict) else msg.to_dict() for msg in messages]
 
 
 def dicts_to_messages(dicts: list[dict[str, Any]]) -> MessageList:
