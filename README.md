@@ -22,12 +22,12 @@ AI tools exist at different **application layers** and serve different **roles**
 | **Agent** | Claude Code, Codex, OpenCode | smolagents (thin), **KohakuTerrarium** | — |
 | **Multi-Agent** | — | **KohakuTerrarium** | CrewAI, AutoGen |
 
-- **LLM app frameworks** (LangChain, Dify) orchestrate LLM calls and chains. You build agents FROM them, but they don't define what an agent IS.
-- **Agent products** (Claude Code, Codex) are real, sophisticated agents — but closed. You can't decompose, reconfigure, or compose them.
-- **smolagents** is genuinely agent-level, but too thin — one loop, one tool list, no module system, no composition.
+- **LLM app frameworks** (LangChain, Dify) orchestrate LLM calls and chains. You build agents from them, but they don't define what an agent is.
+- **Agent products** (Claude Code, Codex) are real, sophisticated agents, but closed. You can't decompose, reconfigure, or compose them.
+- **smolagents** is genuinely agent-level, but too thin: one loop, one tool list, no module system, no composition.
 - **CrewAI / AutoGen** call themselves agent frameworks, but their "agent" is a thin LLM wrapper with a role string. They operate at the multi-agent layer without properly defining the agent underneath.
 
-The gap: **a comprehensive framework at the agent level** — one that defines what an agent actually is as a first-class abstraction, with enough depth to model real agent products, not just toy demos.
+The gap: **a comprehensive framework at the agent level** that defines what an agent actually is as a first-class abstraction, with enough depth to model real agent products, not just toy demos.
 
 ## What KohakuTerrarium Is
 
@@ -37,14 +37,14 @@ The core claim: **the creature abstraction is comprehensive enough to model virt
 
 A creature is a complete agent abstraction composed of:
 
-- **Controller** — the LLM reasoning loop (any model, any provider, any tool-call format)
-- **Input** — how events enter the agent (CLI, TUI, voice/ASR, webhooks, Discord, API — swappable)
-- **Output** — how the agent delivers results (stdout, TTS, Discord, file, API — swappable)
-- **Tools** — what the agent can do (file ops, shell, web, APIs, databases — pluggable)
-- **Triggers** — what wakes the agent up (user input, timers, channel messages, schedules — composable)
-- **Sub-agents** — internal delegation (explore, plan, implement, review — nested, parallel)
+- **Controller**: the LLM reasoning loop. Works with any model, any provider, any tool-call format.
+- **Input**: how events enter the agent. CLI, TUI, voice/ASR, webhooks, Discord, API. Swappable.
+- **Output**: how the agent delivers results. Stdout, TTS, Discord, file, API. Swappable.
+- **Tools**: what the agent can do. File ops, shell, web, APIs, databases. Pluggable.
+- **Triggers**: what wakes the agent up. User input, timers, channel messages, schedules. Composable.
+- **Sub-agents**: internal delegation. Explore, plan, implement, review. Nested and parallel.
 
-Every module is **independently customizable**. Swap any piece without touching the rest. A **plugin system** intercepts how modules communicate — inject RAG context before LLM calls, enforce safety policies on tool execution, track costs — without replacing any module.
+Every module is **independently customizable**. Swap any piece without touching the rest. A **plugin system** intercepts how modules communicate: inject RAG context before LLM calls, enforce safety policies on tool execution, track costs, all without replacing any module.
 
 This is how the same framework models different agent products:
 
@@ -65,22 +65,22 @@ Same framework. Different configs. Each is a standalone creature that also works
     <td valign="top" width="50%">
       <strong>Inside a creature (vertical)</strong><br>
       One controller delegates to tools and sub-agents.<br>
-      This is the <em>agent-level abstraction</em> — what an agent IS.
+      This is the <em>agent-level abstraction</em>: what an agent is.
     </td>
     <td valign="top" width="50%">
       <strong>Between creatures (horizontal)</strong><br>
       Independent creatures communicate through channels.<br>
-      This is the <em>multi-agent wiring</em> — a pure composition layer.
+      This is the <em>multi-agent wiring</em>: a pure composition layer.
     </td>
   </tr>
 </table>
 
 These two levels stay separate by design. A creature never knows it's in a terrarium. A terrarium never inspects creature internals.
 
-- **First-class agent abstraction**: a creature is a complete agent — controller, memory, tools, I/O, triggers, sub-agents — not a workflow node, not a chat participant, not a thin LLM wrapper
+- **First-class agent abstraction**: a creature is a complete agent with its own controller, memory, tools, I/O, triggers, and sub-agents. Not a workflow node, not a chat participant, not a thin LLM wrapper.
 - **Universal**: the same five module types model coding agents, chatbots, monitoring daemons, and real-time streaming agents
 - **Comprehensively customizable**: every module is swappable, plugins intercept the flows between modules, and the whole thing is config-driven
-- **Reusable**: build an agent once, run it solo or in teams — same config, same behavior
+- **Reusable**: build an agent once, run it solo or in teams. Same config, same behavior.
 - **Persistent by default**: sessions save full agent state (conversations, tool metadata, sub-agent state, triggers), not just chat history
 - **Many surfaces, one abstraction**: CLI, TUI, HTTP API, web dashboard, and native desktop app all drive the same underlying agent
 - **Shareable**: package and install creature / terrarium configs from Git or local sources
@@ -93,7 +93,7 @@ Beyond the creature / terrarium philosophy, KohakuTerrarium already has a strong
 - **Non-blocking execution and compaction flow**: tools start immediately during LLM streaming, background jobs do not block the agent loop, and compaction / resume are built into the runtime instead of bolted on afterward.
 - **Session history as operational memory**: `.kohakutr` session files persist conversations, events, jobs, tool metadata, sub-agent state, scratchpad state, channel history, and resumable triggers in a structured store rather than a flat transcript.
 - **Plugin and extension system**: prompt plugins inject context before LLM calls; lifecycle plugins intercept tool execution, sub-agent dispatch, and event processing. Custom modules (tools, inputs, outputs, triggers) are loaded from agent folders or installable packages.
-- **Desktop app**: `kt app` launches a native window via pywebview with text selection, copy support, and close confirmation — same web UI, no browser needed.
+- **Desktop app**: `kt app` launches a native window via pywebview with text selection, copy support, and close confirmation. Same web UI, no browser needed.
 
 ## Architecture at a Glance
 
@@ -139,9 +139,6 @@ User input  | System  |   |    (Main LLM)    |<--| with tools |
                           +------------------+
 ```
 
-### Naming
-- **Terrarium**: a contained world with two levels of meaning. For the creator, it is the world you build agents in. For the creatures, it is the world they live in — any agent architecture can inhabit this framework, and the terrarium layer mimics a small ecosystem where creatures interact through shared environment rather than direct control.
-- **Creature**: something that *lives* in an environment, not just an API endpoint. The naming reinforces that KT thinks about agents as inhabitants of a world.
 
 ## Quick Start
 
@@ -296,7 +293,7 @@ A creature is not a simple ReAct loop. It is a multi-agent system internally: th
 
 A terrarium connects creatures through shared channels, injects the wiring they need, and manages lifecycle and observability. It does **not** add another reasoning layer.
 
-Think of it as a service mesh: routing, lifecycle, observability, but no business logic. Or think of it as a contained world — creatures live in it, interact through shared channels, but each creature is autonomous.
+Think of it as a service mesh: routing, lifecycle, observability, but no business logic. Or think of it as a contained world where creatures live, interact through shared channels, but each creature remains autonomous.
 
 ### Root Agent
 
@@ -344,7 +341,7 @@ kt resume --last             # most recent session
 kt resume swe_team           # prefix match
 ```
 
-Session files use the `.kohakutr` format and contain far more than a plain transcript — they capture operational state:
+Session files use the `.kohakutr` format and contain far more than a plain transcript. They capture full operational state:
 
 - conversation history
 - full tool call metadata
@@ -622,39 +619,39 @@ docs/             # Concepts, architecture, guides, API reference
 
 Full documentation lives in [`docs/`](docs/README.md). Key starting points:
 
-**Guides** — [docs/guide/](docs/guide/README.md)
+**Guides**: [docs/guide/](docs/guide/README.md)
 
-- [Getting Started](docs/guide/getting-started.md) — installation, authentication, first agent
-- [Configuration Reference](docs/guide/configuration.md) — creature and terrarium YAML reference
-- [Creatures](docs/guide/creatures.md) — pre-built creatures, inheritance, creating your own
-- [Terrariums](docs/guide/terrariums.md) — multi-agent setup, channel wiring, root agent
-- [Sessions](docs/guide/sessions.md) — persistence, resume, memory search
-- [Custom Modules](docs/guide/custom-modules.md) — build custom tools, inputs, outputs, triggers, sub-agents
-- [Plugins](docs/guide/plugins.md) — intercept agent flows with prompt and lifecycle plugins
-- [Examples](docs/guide/examples.md) — walkthrough of included example agents and terrariums
+- [Getting Started](docs/guide/getting-started.md): installation, authentication, first agent
+- [Configuration Reference](docs/guide/configuration.md): creature and terrarium YAML reference
+- [Creatures](docs/guide/creatures.md): pre-built creatures, inheritance, creating your own
+- [Terrariums](docs/guide/terrariums.md): multi-agent setup, channel wiring, root agent
+- [Sessions](docs/guide/sessions.md): persistence, resume, memory search
+- [Custom Modules](docs/guide/custom-modules.md): build custom tools, inputs, outputs, triggers, sub-agents
+- [Plugins](docs/guide/plugins.md): intercept agent flows with prompt and lifecycle plugins
+- [Examples](docs/guide/examples.md): walkthrough of included example agents and terrariums
 
-**Concepts** — [docs/concepts/](docs/concepts/README.md)
+**Concepts**: [docs/concepts/](docs/concepts/README.md)
 
-- [Overview](docs/concepts/overview.md) — core abstractions and why the split exists
-- [Agents](docs/concepts/agents.md) — creature lifecycle, controller as orchestrator, sub-agents
-- [Terrariums](docs/concepts/terrariums.md) — pure wiring layer, root agent, horizontal composition
-- [Channels](docs/concepts/channels.md) — queue/broadcast types, channel triggers, callbacks
-- [Execution Model](docs/concepts/execution.md) — event sources, processing loop, tool modes
-- [Prompt System](docs/concepts/prompts.md) — system prompt aggregation, skill modes, topology injection
-- [Serving Layer](docs/concepts/serving.md) — KohakuManager, unified WebSocket, session recording
-- [Environment-Session](docs/concepts/environment.md) — isolation, shared state, session lifecycle
-- [Tool Formats](docs/concepts/tool-formats.md) — call syntax, parsing, format configuration
+- [Overview](docs/concepts/overview.md): core abstractions and why the split exists
+- [Agents](docs/concepts/agents.md): creature lifecycle, controller as orchestrator, sub-agents
+- [Terrariums](docs/concepts/terrariums.md): pure wiring layer, root agent, horizontal composition
+- [Channels](docs/concepts/channels.md): queue/broadcast types, channel triggers, callbacks
+- [Execution Model](docs/concepts/execution.md): event sources, processing loop, tool modes
+- [Prompt System](docs/concepts/prompts.md): system prompt aggregation, skill modes, topology injection
+- [Serving Layer](docs/concepts/serving.md): KohakuManager, unified WebSocket, session recording
+- [Environment-Session](docs/concepts/environment.md): isolation, shared state, session lifecycle
+- [Tool Formats](docs/concepts/tool-formats.md): call syntax, parsing, format configuration
 
-**API Reference** — [docs/api-reference/](docs/api-reference/README.md)
+**API Reference**: [docs/api-reference/](docs/api-reference/README.md)
 
-- [Python API](docs/api-reference/python.md) — Agent, SessionStore, TerrariumRuntime, all modules
-- [HTTP API](docs/api-reference/http.md) — REST + WebSocket + config discovery + sessions
-- [CLI Reference](docs/api-reference/cli.md) — `kt run`, `kt resume`, `kt terrarium run`, `kt login`
+- [Python API](docs/api-reference/python.md): Agent, SessionStore, TerrariumRuntime, all modules
+- [HTTP API](docs/api-reference/http.md): REST + WebSocket + config discovery + sessions
+- [CLI Reference](docs/api-reference/cli.md): `kt run`, `kt resume`, `kt terrarium run`, `kt login`
 
-**Contributing** — [docs/develop/](docs/develop/README.md)
+**Contributing**: [docs/develop/](docs/develop/README.md)
 
-- [Testing](docs/develop/testing.md) — test infrastructure, unit/integration coverage
-- [Framework Internals](docs/develop/internals.md) — import analysis, internal decisions
+- [Testing](docs/develop/testing.md): test infrastructure, unit/integration coverage
+- [Framework Internals](docs/develop/internals.md): import analysis, internal decisions
 
 ## License
 
