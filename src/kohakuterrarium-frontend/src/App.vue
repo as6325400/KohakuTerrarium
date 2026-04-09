@@ -8,11 +8,17 @@
         </transition>
       </router-view>
     </main>
+    <CommandPalette />
+    <ToastCenter />
   </div>
 </template>
 
 <script setup>
+import CommandPalette from "@/components/chrome/CommandPalette.vue";
+import ToastCenter from "@/components/chrome/ToastCenter.vue";
 import NavRail from "@/components/layout/NavRail.vue";
+import { useAutoTriggers } from "@/composables/useAutoTriggers";
+import { useBuiltinCommands } from "@/composables/useBuiltinCommands";
 import { useKeyboardShortcuts } from "@/composables/useKeyboardShortcuts";
 import { useInstancesStore } from "@/stores/instances";
 import { useThemeStore } from "@/stores/theme";
@@ -25,4 +31,9 @@ instances.fetchAll();
 
 // Global Ctrl+1..6 preset switcher, Ctrl+Shift+L edit mode, Ctrl+K palette.
 useKeyboardShortcuts();
+// Register every built-in palette command.
+useBuiltinCommands();
+// Auto-trigger rules: canvas first-artifact notification, processing
+// error → focus debug preset.
+useAutoTriggers();
 </script>
