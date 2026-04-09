@@ -1,6 +1,5 @@
 """Interactive sub-agent management mixin."""
 
-
 from typing import Any, Callable
 
 from kohakuterrarium.modules.subagent.interactive import (

@@ -9,7 +9,6 @@ import asyncio
 from pathlib import Path
 from typing import Any, Callable
 
-from kohakuterrarium.core.events import create_tool_complete_event
 from kohakuterrarium.core.job import (
     JobState,
     JobStatus,
@@ -343,25 +342,24 @@ class SubAgentManager(InteractiveManagerMixin):
                 turns=result.turns,
             )
 
-            # Fire completion callback to deliver result as event
-            if self._on_complete:
-                event = create_tool_complete_event(
-                    job_id=job_id,
-                    content=result.output or "",
-                    error=result.error,
-                )
-                # Attach sub-agent metadata (tools_used, turns, duration)
-                if event.context is None:
-                    event.context = {}
-                event.context["subagent_metadata"] = {
-                    "tools_used": result.metadata.get("tools_used", []),
-                    "turns": result.turns,
-                    "duration": result.duration,
-                    "total_tokens": result.total_tokens,
-                    "prompt_tokens": result.prompt_tokens,
-                    "completion_tokens": result.completion_tokens,
-                }
-                self._on_complete(event)
+            # NOTE: We intentionally do NOT fire ``self._on_complete`` here.
+            #
+            # Sub-agent completions are delivered through the
+            # ``BackgroundifyHandle`` that wraps this task in
+            # ``agent_handlers._dispatch_subagent_event``. The handle has
+            # two distinct paths:
+            #
+            # * direct (not promoted) — the awaiter in ``_wait_handles``
+            #   receives the result and ``_collect_and_push_feedback``
+            #   emits the ``subagent_done`` / ``tool_done`` activity and
+            #   pushes the feedback event to the controller.
+            # * background (promoted) — the handle's ``_on_task_done``
+            #   fires ``agent._on_backgroundify_complete``, which in turn
+            #   emits the activity and pushes the trigger event.
+            #
+            # Firing ``_on_complete`` HERE too would double-fire for
+            # direct sub-agents, causing duplicate panels in the CLI and
+            # a ghost extra turn in the controller loop.
 
             return result
 
@@ -381,14 +379,7 @@ class SubAgentManager(InteractiveManagerMixin):
                 error=error_msg,
             )
 
-            # Fire completion callback so controller/UI gets notified
-            if self._on_complete:
-                event = create_tool_complete_event(
-                    job_id=job_id,
-                    content="",
-                    error=error_msg,
-                )
-                self._on_complete(event)
+            # See note above — delivery happens via BackgroundifyHandle.
 
             return result
 
@@ -408,14 +399,7 @@ class SubAgentManager(InteractiveManagerMixin):
                 error=str(e),
             )
 
-            # Fire completion callback even on error
-            if self._on_complete:
-                event = create_tool_complete_event(
-                    job_id=job_id,
-                    content="",
-                    error=str(e),
-                )
-                self._on_complete(event)
+            # See note above — delivery happens via BackgroundifyHandle.
 
             return result
 

@@ -1,6 +1,5 @@
 """Sub-agent result types and job wrapper."""
 
-
 import asyncio
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
