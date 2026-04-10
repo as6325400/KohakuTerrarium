@@ -93,5 +93,23 @@ onUnmounted(() => {
 .vditor {
   border: none !important;
   border-radius: 0 !important;
+  font-size: 13px !important;
+}
+.vditor-ir pre.vditor-reset,
+.vditor-sv pre.vditor-reset,
+.vditor-wysiwyg pre.vditor-reset {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  padding: 8px 16px !important;
+}
+.vditor-ir pre.vditor-reset h1 { font-size: 1.4em !important; }
+.vditor-ir pre.vditor-reset h2 { font-size: 1.25em !important; }
+.vditor-ir pre.vditor-reset h3 { font-size: 1.1em !important; }
+.vditor-toolbar {
+  font-size: 12px !important;
+  padding: 2px 4px !important;
+}
+.vditor-toolbar__item {
+  padding: 2px 3px !important;
 }
 </style>
